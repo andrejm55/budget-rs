@@ -52,4 +52,10 @@ pub enum Commands {
         #[arg(help = "Transaction ID to delete")]
         id: u32,
     },
+
+    #[command(about = "Launch the local browser-based GUI")]
+    Gui {
+        #[arg(long, default_value_t = 3000, help = "Port to serve the GUI on")]
+        port: u16,
+    },
 }

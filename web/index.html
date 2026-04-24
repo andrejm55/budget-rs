@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>budget-rs</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">budget-rs</p>
+          <h1>Simple budget tracker</h1>
+          <p class="hero-copy">
+            Add transactions, filter by month or category, and keep an eye on your balance.
+          </p>
+        </div>
+        <button id="refreshButton" class="secondary-button" type="button">Refresh</button>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Add transaction</h2>
+          <p>Entries are saved to your local JSON file immediately.</p>
+        </div>
+        <form id="transactionForm" class="form-grid">
+          <label>
+            Type
+            <select name="transaction_type" required>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </label>
+
+          <label>
+            Amount
+            <input name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+          </label>
+
+          <label>
+            Category
+            <select name="category" required>
+              <option value="salary">Salary</option>
+              <option value="rent">Rent</option>
+              <option value="groceries">Groceries</option>
+              <option value="transport">Transport</option>
+              <option value="utilities">Utilities</option>
+              <option value="dining">Dining</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="savings">Savings</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label>
+            Date
+            <input name="date" type="date" />
+          </label>
+
+          <label class="full-width">
+            Description
+            <input name="description" type="text" maxlength="120" placeholder="Short note" required />
+          </label>
+
+          <div class="full-width form-actions">
+            <button class="primary-button" type="submit">Save transaction</button>
+            <p id="formStatus" class="status-text" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Overview</h2>
+          <p>Use filters to narrow the list and summary.</p>
+        </div>
+
+        <div class="filters">
+          <label>
+            Month
+            <input id="monthFilter" type="month" />
+          </label>
+
+          <label>
+            Category
+            <select id="categoryFilter">
+              <option value="">All categories</option>
+              <option value="salary">Salary</option>
+              <option value="rent">Rent</option>
+              <option value="groceries">Groceries</option>
+              <option value="transport">Transport</option>
+              <option value="utilities">Utilities</option>
+              <option value="dining">Dining</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="savings">Savings</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <button id="clearFiltersButton" class="ghost-button" type="button">Clear filters</button>
+        </div>
+
+        <div class="summary-grid">
+          <article class="summary-card income">
+            <p>Income</p>
+            <strong id="incomeValue">0.00</strong>
+          </article>
+          <article class="summary-card expense">
+            <p>Expenses</p>
+            <strong id="expenseValue">0.00</strong>
+          </article>
+          <article class="summary-card net">
+            <p>Net balance</p>
+            <strong id="netValue">0.00</strong>
+          </article>
+          <article class="summary-card count">
+            <p>Transactions</p>
+            <strong id="countValue">0</strong>
+          </article>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="transactionRows">
+              <tr>
+                <td colspan="7" class="empty-state">Loading transactions...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

@@ -2,6 +2,7 @@ mod cli;
 mod models;
 mod reports;
 mod storage;
+mod web;
 
 use anyhow::{Result, anyhow};
 use chrono::NaiveDate;
@@ -12,7 +13,8 @@ use reports::{calculate_summary, filter_transactions, format_category, format_tr
 use std::str::FromStr;
 use storage::{load_transactions, save_transactions};
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let cli = Cli::parse();
 
     match cli.command {
@@ -121,6 +123,9 @@ fn main() -> Result<()> {
 
             save_transactions(&transactions)?;
             println!("Transaction {} deleted successfully.", id);
+        }
+        Commands::Gui { port } => {
+            web::run_server(port).await?;
         }
     }
 
